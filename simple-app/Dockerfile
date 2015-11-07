@@ -8,4 +8,4 @@ COPY logstash.conf /config/logstash.conf
 
 RUN logstash -f /config/logstash.conf --configtest
 
-CMD /app/simple-app | logstash -f /config/logstash.conf --verbose
+CMD /app/simple-app | logstash -f /config/logstash.conf
