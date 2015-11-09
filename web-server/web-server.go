@@ -5,6 +5,7 @@ import (
 	"math"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 	log "github.com/Sirupsen/logrus"
 )
@@ -13,6 +14,7 @@ func main() {
 	address := ":8080"
 
 	log.SetFormatter(&log.JSONFormatter{})
+	log.SetOutput(os.Stdout)
 	log.Info("Listening on " + address)
 
 	http.HandleFunc("/", wrapRequestWithLogging(requestHandler))

@@ -21,7 +21,7 @@ echo "*** Kibana is available at: http://$ip:5601"
 
 echo "*** Starting app..."
 
-docker run --rm -t -i --name simple-app --link $elasticsearchContainer:elasticsearch simple-app
+docker run --rm -t -i --name web-server -p 8080:8080 --link $elasticsearchContainer:elasticsearch web-server
 
 echo "*** Cleaning up..."
 
