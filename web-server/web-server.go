@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"time"
+
 	log "github.com/Sirupsen/logrus"
 )
 
@@ -23,7 +24,7 @@ func main() {
 }
 
 func requestHandler(writer http.ResponseWriter, request *http.Request) {
-	possibleResponses := []int {
+	possibleResponses := []int{
 		http.StatusInternalServerError,
 		http.StatusOK,
 		http.StatusOK,
@@ -40,11 +41,11 @@ func requestHandler(writer http.ResponseWriter, request *http.Request) {
 
 	responseTimeSD := float64(5 * randomResponseIndex)
 	responseTimeMean := float64((10 * randomResponseIndex) + 30)
-	simulatedProcessingTime := math.Max(0, rand.NormFloat64() * responseTimeSD + responseTimeMean)
+	simulatedProcessingTime := math.Max(0, rand.NormFloat64()*responseTimeSD+responseTimeMean)
 
 	time.Sleep(time.Duration(simulatedProcessingTime) * time.Millisecond)
 
-	if (request.URL.Path != "/") {
+	if request.URL.Path != "/" {
 		writer.WriteHeader(http.StatusNotFound)
 		return
 	}
@@ -67,17 +68,16 @@ func wrapRequestWithLogging(handler http.HandlerFunc) http.HandlerFunc {
 
 		log.WithFields(log.Fields{
 			"httpResponseTimeMilliseconds": elapsed / time.Millisecond,
-			"httpResponseCode": wrapper.Status,
-			"httpRequestUrl": request.URL.String(),
-			"httpRequestMethod": request.Method,
-			"httpRequestRemoteAdresss": request.RemoteAddr,
-			"httpRequestHost": request.Host,
-			"httpRequestReferer": request.Referer(),
-			"httpRequestUserAgent": request.UserAgent(),
+			"httpResponseCode":             wrapper.Status,
+			"httpRequestUrl":               request.URL.String(),
+			"httpRequestMethod":            request.Method,
+			"httpRequestRemoteAdresss":     request.RemoteAddr,
+			"httpRequestHost":              request.Host,
+			"httpRequestReferer":           request.Referer(),
+			"httpRequestUserAgent":         request.UserAgent(),
 		}).Info("Received request")
 	}
 }
-
 
 type ResponseWriterWrapper struct {
 	Status int
