@@ -8,11 +8,10 @@ services:
   simple-app:
     depends_on:
       - elasticsearch
-    image: logstash:2.0
+    image: logstash:2.2
     volumes:
       - ./conf-files/logstash:/conf
       - ./simple-app/bin:/opt/simple-app
-    # command: [logstash, -f, /conf/logstash.conf]
     command: /opt/simple-app/simple-app-amd64-linux | logstash -f /conf/logstash.conf
 
   kibana:
