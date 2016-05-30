@@ -1,6 +1,6 @@
 # ELK Intro Using Docker
 This project is a simple way to get up and running with the [Elasticsearch](https://www.elastic.co/) + [Logstash](https://www.elastic.co/products/logstash) + [Kibana](https://www.elastic.co/products/kibana) stack (Commonly referred to as ELK stack).  
-The intention is to understand it's set up and configuration more in depth with some simple examples of an application logging and a web server logging.
+The intention is to understand it's set up and configuration more in depth with some simple examples of an application generating some simple logs and a web server logging it's requests.
 
 ### Dependencies
 [Docker](https://docs.docker.com/engine/installation/)  
