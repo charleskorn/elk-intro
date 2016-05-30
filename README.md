@@ -12,7 +12,7 @@ The intention is to understand it's set up and configuration more in depth with 
 Once you have all the dependencies installed and correctly configured to bring up the ELK stack simply run  
 `$ ./go.sh run`  
 
-This will start two application which we will use to generate some log messages which we will use to send to this ELK setup.  
+This will start two applications which we will use to generate some log messages to send to our ELK setup.  
 The first application is just a simple binary file which will just generate a random magic number and log it. (/simple-app)  
 The second application is a simple web server application which will just log the request sent to that web server. (/web-server)  
 
