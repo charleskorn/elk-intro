@@ -1,22 +1,22 @@
 version: '2'
 services:
   elasticsearch:
-    image: elasticsearch:2.0
+    image: elasticsearch:2.3
     ports:
      - "9200:9200"
 
   simple-app:
     depends_on:
       - elasticsearch
-    image: logstash:2.2
+    image: logstash:2.3
     volumes:
       - ./conf-files/logstash:/conf
       - ./simple-app/bin:/opt/simple-app
-    command: /opt/simple-app/simple-app-amd64-linux | logstash -f /conf/logstash.conf
+    command: bash -c "/opt/simple-app/simple-app-amd64-linux | logstash -f /conf/logstash.conf"
 
   kibana:
     depends_on:
       - elasticsearch
-    image: kibana:4.2
+    image: kibana:4.5
     ports:
       - "5601:5601"

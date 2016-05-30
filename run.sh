@@ -1,34 +1,46 @@
 #!/usr/bin/env bash
+
 set -e
 
-for i in "$@"
-do
-case $i in
-    -r|--run)
-    echo "Compiling statically linked binary..."
-    cd simple-app
-    CGO_ENABLED=0 GOOS=linux go build -o bin/simple-app-amd64-linux -a -installsuffix cgo .
-    cd ..
-    echo "Starting docker Containers..."
-    docker-compose up --force-recreate
-    echo "Cleaning up docker Containers..."
-    docker-compose stop && docker-compose rm -f
-    shift # past argument=value
+function main {
+  case "$1" in
+
+  build)
+    build
     ;;
-    -b|--build)
-    echo $i
-    shift # past argument=value
+
+  run)
+    run
     ;;
-    -t|--thing)
-    echo $i
-    shift # past argument=value
+
+  *)
+    help
+    exit 1
     ;;
-    -h|--help)
-    echo $i
-    shift # past argument with no value
-    ;;
-    *)
-            # unknown option (help)
-    ;;
-esac
-done
+
+  esac
+}
+
+function build {
+  echo "Compiling statically linked binary..."
+  cd simple-app
+  CGO_ENABLED=0 GOOS=linux go build -o bin/simple-app-amd64-linux -a -installsuffix cgo .
+  cd ..
+}
+
+function run {
+  build
+  echo "Starting docker Containers..."
+  docker-compose up --force-recreate
+  echo "Cleaning up docker Containers..."
+  docker-compose stop && docker-compose rm -f
+}
+
+function help {
+  echo "Usage"
+  echo "run.sh run    = build and run the elk stack"
+  echo "run.sh build  = build th binary only"
+  echo "use ctrl+c to shutdown the elk stack once it is running."
+}
+
+main "$@"
