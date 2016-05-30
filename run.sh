@@ -22,9 +22,12 @@ function main {
 }
 
 function build {
-  echo "Compiling statically linked binary..."
+  echo "Compiling all binary dependencies..."
   cd simple-app
   CGO_ENABLED=0 GOOS=linux go build -o bin/simple-app-amd64-linux -a -installsuffix cgo .
+  cd ../web-server
+  GOBIN=$GOPATH/bin go get ./...
+  CGO_ENABLED=0 GOOS=linux go build -o bin/web-server-amd64-linux -a -installsuffix cgo .
   cd ..
 }
 
