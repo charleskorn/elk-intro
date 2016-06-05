@@ -1,0 +1,35 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:2.3
+    ports:
+     - "9200:9200"
+
+  simple-app:
+    depends_on:
+      - elasticsearch
+    image: logstash:2.3
+    hostname: simeple-app-host
+    volumes:
+      - ./simple-app/conf:/conf
+      - ./simple-app/bin:/opt/simple-app
+    command: bash -c "/opt/simple-app/simple-app-amd64-linux | logstash -f /conf/logstash.conf"
+
+  web-server:
+    depends_on:
+      - elasticsearch
+    image: logstash:2.3
+    hostname: web-server-host
+    volumes:
+      - ./web-server/conf:/conf
+      - ./web-server/bin:/opt/web-server
+    ports:
+      - "8080:8080"
+    command: bash -c "/opt/web-server/web-server-amd64-linux | logstash -f /conf/logstash.conf"
+
+  kibana:
+    depends_on:
+      - elasticsearch
+    image: kibana:4.5
+    ports:
+      - "5601:5601"
