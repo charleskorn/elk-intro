@@ -33,17 +33,17 @@ function build {
 
 function run {
   build
-  echo "Starting docker Containers..."
+  echo "Starting Docker containers..."
   docker-compose up --force-recreate
-  echo "Cleaning up docker Containers..."
+  echo "Cleaning up Docker containers..."
   docker-compose stop && docker-compose rm -f
 }
 
 function help {
   echo "Usage"
-  echo "go.sh run    = build and run the elk stack"
-  echo "go.sh build  = build th binary only"
-  echo "use ctrl+c to shutdown the elk stack once it is running."
+  echo "go.sh run    = build applications and run the ELK stack"
+  echo "go.sh build  = build the application binaries only"
+  echo "Use Ctrl+C to shutdown the ELK stack once it is running."
 }
 
 main "$@"
